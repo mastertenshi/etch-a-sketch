@@ -7,8 +7,10 @@
 </head>
 <body>
     <div id="button-div">
-        <button id="button" onclick="resetTdBackground(true)">Clear</button>
-        <button id="buttonBlack" onclick="resetTdBackground()">Clear</button>
+        <label for="gridSize">Grid-size:</label>
+        <input id="grid-size" type="text" name="gridSize" placeholder="16-100" oninput="changeGridSize()">
+        <button id="button-clear" onclick="resetTdBackground()">Clear</button>
+        <button id="button-switch-table" onclick="switchBoard()">Switch Board</button>
     </div>
     <div id="container">
         

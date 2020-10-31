@@ -1,7 +1,7 @@
-function createTable(isColored = false) {
+function createTable() {
     let tableDiv = document.getElementById("container");
     tableDiv.appendChild(document.createElement("table"));
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < gridSize; i++) {
         
         let table = tableDiv.lastElementChild;
 
@@ -14,9 +14,12 @@ function createTable(isColored = false) {
             table.id = "table-black";
         }
 
-        for(let k = 0; k < 16; k++) {
+        for(let k = 0; k < gridSize; k++) {
             // tr
             table.childNodes[i].appendChild(document.createElement("td"));
+
+            // td
+            table.childNodes[i].childNodes[k].style.padding = `${40 / gridSize}vmin`;
             
             if(isColored){
                 lightnessArray[i].push(100);
@@ -25,9 +28,9 @@ function createTable(isColored = false) {
     }
 }
 
-function resetTdBackground(isColored = false) {
-    for (let i = 0; i < 16; i++) {
-        for(let k = 0; k < 16; k++) {
+function resetTdBackground() {
+    for (let i = 0; i < gridSize; i++) {
+        for(let k = 0; k < gridSize; k++) {
 
             let table;
 
@@ -45,9 +48,9 @@ function resetTdBackground(isColored = false) {
     }
 }
 
-function addTdMouseEnterListener(isColored = false) {
-    for (let i = 0; i < 16; i++) {
-        for(let k = 0; k < 16; k++) {
+function addTdMouseEnterListener() {
+    for (let i = 0; i < gridSize; i++) {
+        for(let k = 0; k < gridSize; k++) {
 
             let table;
 
@@ -57,7 +60,7 @@ function addTdMouseEnterListener(isColored = false) {
                 table = document.getElementById("table-black");
             } 
 
-            td = table.childNodes[i].childNodes[k];
+            let td = table.childNodes[i].childNodes[k];
 
             td.addEventListener("mouseenter", function() {
                 if (isColored) {
@@ -76,12 +79,50 @@ function addTdMouseEnterListener(isColored = false) {
     }
 }
 
+function switchBoard() {
+    if(isColored) {
+        document.getElementById("table-colored").remove();
+        isColored = false;
+        init();
+    } else {
+        document.getElementById("table-black").remove();
+        isColored = true;
+        init();
+    }
+}
+
+
+function changeGridSize() {
+    let input = document.getElementById("grid-size");
+    let num = parseInt(input.value);
+    if(Number.isInteger(num)){
+        console.log("HERE");
+        if (num >= 16 && num <= 100){
+            input.style.borderColor = "lightgray";
+            gridSize = num;
+            if(isColored) {
+                document.getElementById("table-colored").remove();
+            } else {
+                document.getElementById("table-black").remove();
+            }
+            init();
+        } else {
+            input.style.borderColor = "red";
+        }
+    } else {
+        input.textContent = "";
+    }
+}
+
 let lightnessArray = [];
+let gridSize = 50;
 
-createTable(true);
-addTdMouseEnterListener(true);
-resetTdBackground(true);
+let isColored = true;
 
-createTable();
-addTdMouseEnterListener();
-resetTdBackground();
+function init() {
+    createTable(isColored);
+    addTdMouseEnterListener(isColored);
+    resetTdBackground(isColored);
+}
+
+init();

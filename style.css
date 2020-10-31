@@ -4,8 +4,7 @@
 }
 
 #container td {
-    border: 1px solid rgb(121, 121, 121);
-    padding: 15px;
+    border: 1px solid rgba(121, 121, 121, 0.2);
 }
 
 #container table {
@@ -14,7 +13,26 @@
 }
 
 #button-div {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: auto auto auto auto;
+    gap: 50px;
     margin: 18px 0;
+}
+
+#grid-size {
+    width: 100px;
+    margin-left: -40px;
+    border-radius: 25px;
+    border: 1px solid lightgray;
+    padding-left: 10px;
+}
+
+#grid-size:focus {
+    outline: none;
+}
+
+#grid-size::placeholder {
+    color: rgb(151, 151, 151);
 }
