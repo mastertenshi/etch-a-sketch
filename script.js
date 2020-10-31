@@ -91,7 +91,6 @@ function switchBoard() {
     }
 }
 
-
 function changeGridSize() {
     let input = document.getElementById("grid-size");
     let num = parseInt(input.value);
