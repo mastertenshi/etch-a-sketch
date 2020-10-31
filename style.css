@@ -6,15 +6,15 @@
 #container td {
     border: 1px solid rgb(121, 121, 121);
     padding: 15px;
-    background-color:hsl(0, 0%, 100%);
 }
 
 #container table {
     border-collapse: collapse;
+    margin: 0 20px;
 }
 
 #button-div {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     margin: 18px 0;
 }

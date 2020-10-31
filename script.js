@@ -35,7 +35,6 @@ function addTdMouseEnterListener() {
             let td = tableDiv.firstElementChild.childNodes[i].childNodes[k];
 
             td.addEventListener("mouseenter", function() {
-                console.log(this.style.backgroundColor);
 
                 if(lightnessArray[i][k] > 0)
                     lightnessArray[i][k] -= 10;
@@ -49,15 +48,62 @@ function addTdMouseEnterListener() {
     }
 }
 
+
+/*  Colorful     *
+ * * * * * * * * *
+ *  Normal       *
+ *               */
+
+ function createTableNormal() {
+    tableDiv.appendChild(document.createElement("table"));
+    for (let i = 0; i < 16; i++) {
+        // table
+        tableDiv.lastElementChild.appendChild(document.createElement("tr"));
+
+        for(let k = 0; k < 16; k++) {
+            let tr = tableDiv.lastElementChild.childNodes[i];
+
+            tr.appendChild(document.createElement("td"));
+        }
+    }
+}
+
+function resetTdBackgroundNormal() {
+    for (let i = 0; i < 16; i++) {
+        for(let k = 0; k < 16; k++) {
+
+            let td = tableDiv.lastElementChild.childNodes[i].childNodes[k];
+
+            td.style.backgroundColor = "hsl(0, 0%, 100%)";
+        }
+    }
+}
+
+function addTdMouseEnterListenerNormal() {
+    for (let i = 0; i < 16; i++) {
+        for(let k = 0; k < 16; k++) {
+
+            let td = tableDiv.lastElementChild.childNodes[i].childNodes[k];
+
+            td.addEventListener("mouseenter", function() {
+                this.style.backgroundColor = "hsl(0, 0%, 0%)";
+            })
+        }
+    }
+}
+
 let tableDiv = document.getElementById("container");
 let lightnessArray = [];
 
 createTable();
+createTableNormal();
 
 addTdMouseEnterListener();
-resetTdBackground();
+addTdMouseEnterListenerNormal();
 
-console.log(lightnessArray);
+resetTdBackground();
+resetTdBackgroundNormal();
 
 document.getElementById("button").addEventListener("click", resetTdBackground);
+document.getElementById("buttonNormal").addEventListener("click", resetTdBackgroundNormal);
 
