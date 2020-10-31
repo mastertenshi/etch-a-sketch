@@ -1,109 +1,87 @@
-function createTable() {
+function createTable(isColored = false) {
+    let tableDiv = document.getElementById("container");
     tableDiv.appendChild(document.createElement("table"));
     for (let i = 0; i < 16; i++) {
-        // table
-        tableDiv.firstElementChild.appendChild(document.createElement("tr"));
+        
+        let table = tableDiv.lastElementChild;
 
-        lightnessArray.push([]);
+        table.appendChild(document.createElement("tr"));
+
+        if(isColored){
+            table.id = "table-colored";
+            lightnessArray.push([]);
+        } else {
+            table.id = "table-black";
+        }
+
         for(let k = 0; k < 16; k++) {
-            let tr = tableDiv.firstElementChild.childNodes[i];
-
-            tr.appendChild(document.createElement("td"));
-
-            lightnessArray[i].push(100);
+            // tr
+            table.childNodes[i].appendChild(document.createElement("td"));
+            
+            if(isColored){
+                lightnessArray[i].push(100);
+            }
         }
     }
 }
 
-function resetTdBackground() {
+function resetTdBackground(isColored = false) {
     for (let i = 0; i < 16; i++) {
         for(let k = 0; k < 16; k++) {
 
-            let td = tableDiv.firstElementChild.childNodes[i].childNodes[k];
+            let table;
 
-            td.style.backgroundColor = "hsl(0, 0%, 100%)";
+            if(isColored) {
+                lightnessArray[i][k] = 100;
+                table = document.getElementById("table-colored");
+            } else {
+                table = document.getElementById("table-black");
+            }
 
-            lightnessArray[i][k] = 100;
-        }
-    }
-}
-
-function addTdMouseEnterListener() {
-    for (let i = 0; i < 16; i++) {
-        for(let k = 0; k < 16; k++) {
-
-            let td = tableDiv.firstElementChild.childNodes[i].childNodes[k];
-
-            td.addEventListener("mouseenter", function() {
-
-                if(lightnessArray[i][k] > 0)
-                    lightnessArray[i][k] -= 10;
-
-                let hue = Math.floor(Math.random() * 360);
-                let saturation = Math.floor(Math.random() * (100 - 40)) + 40;
-                
-                this.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightnessArray[i][k]}%)`;
-            })
-        }
-    }
-}
-
-
-/*  Colorful     *
- * * * * * * * * *
- *  Normal       *
- *               */
-
- function createTableNormal() {
-    tableDiv.appendChild(document.createElement("table"));
-    for (let i = 0; i < 16; i++) {
-        // table
-        tableDiv.lastElementChild.appendChild(document.createElement("tr"));
-
-        for(let k = 0; k < 16; k++) {
-            let tr = tableDiv.lastElementChild.childNodes[i];
-
-            tr.appendChild(document.createElement("td"));
-        }
-    }
-}
-
-function resetTdBackgroundNormal() {
-    for (let i = 0; i < 16; i++) {
-        for(let k = 0; k < 16; k++) {
-
-            let td = tableDiv.lastElementChild.childNodes[i].childNodes[k];
+            let td = table.childNodes[i].childNodes[k];
 
             td.style.backgroundColor = "hsl(0, 0%, 100%)";
         }
     }
 }
 
-function addTdMouseEnterListenerNormal() {
+function addTdMouseEnterListener(isColored = false) {
     for (let i = 0; i < 16; i++) {
         for(let k = 0; k < 16; k++) {
 
-            let td = tableDiv.lastElementChild.childNodes[i].childNodes[k];
+            let table;
+
+            if (isColored) {
+                table = document.getElementById("table-colored");
+            } else {
+                table = document.getElementById("table-black");
+            } 
+
+            td = table.childNodes[i].childNodes[k];
 
             td.addEventListener("mouseenter", function() {
-                this.style.backgroundColor = "hsl(0, 0%, 0%)";
+                if (isColored) {
+                    if (lightnessArray[i][k] > 0)
+                        lightnessArray[i][k] -= 10;
+
+                    let hue = Math.floor(Math.random() * 360);
+                    let saturation = Math.floor(Math.random() * (100 - 40)) + 40;
+
+                    this.style.backgroundColor = `hsl(${hue}, ${saturation}%, ${lightnessArray[i][k]}%)`;
+                } else {
+                    this.style.backgroundColor = "hsl(0, 0%, 0%)";
+                }
             })
         }
     }
 }
 
-let tableDiv = document.getElementById("container");
 let lightnessArray = [];
 
+createTable(true);
+addTdMouseEnterListener(true);
+resetTdBackground(true);
+
 createTable();
-createTableNormal();
-
 addTdMouseEnterListener();
-addTdMouseEnterListenerNormal();
-
 resetTdBackground();
-resetTdBackgroundNormal();
-
-document.getElementById("button").addEventListener("click", resetTdBackground);
-document.getElementById("buttonNormal").addEventListener("click", resetTdBackgroundNormal);
-
